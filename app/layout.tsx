@@ -3,7 +3,8 @@ import type { Metadata } from "next";
 import { Nunito } from "next/font/google"; // 폰트 임포트
 import NavBar from "./components/navbar/NavBar";
 import ClientOnly from "./components/ClientOnly";
-import Modal from "./components/modals/Modal";
+import RegisterModal from "./components/modals/RegisterModal";
+import ToasterProvider from "./providers/ToasterProvider";
 
 /* 폰트 정의 */
 const font = Nunito({
@@ -24,7 +25,8 @@ export default function RootLayout({
     <html lang="en">
       <body className={font.className}>
         <ClientOnly>
-          <Modal actionLabel="Submit" title="modal title" isOpen={true} />
+          <ToasterProvider />
+          <RegisterModal />
           <NavBar />
         </ClientOnly>
         {children}
