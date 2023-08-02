@@ -1,4 +1,4 @@
-"use client"; // 이게 뭔지 찾아보자
+"use client";
 
 interface ContainerProps {
   children: React.ReactNode;
