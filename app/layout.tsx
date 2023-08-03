@@ -1,4 +1,3 @@
-
 import "./globals.css";
 import type { Metadata } from "next";
 import { Nunito } from "next/font/google"; // 폰트 임포트
@@ -7,6 +6,7 @@ import ClientOnly from "./components/ClientOnly";
 import RegisterModal from "./components/modals/RegisterModal";
 import ToasterProvider from "./providers/ToasterProvider";
 import LoginModal from "./components/modals/LoginModal";
+import { getCurrentUser } from "./actions/getCurrentUser";
 
 /* 폰트 정의 */
 const font = Nunito({
@@ -18,11 +18,13 @@ export const metadata: Metadata = {
   description: "airbnb clone",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const currentUser = await getCurrentUser();
+
   return (
     <html lang="en">
       <body className={font.className}>
@@ -30,7 +32,7 @@ export default function RootLayout({
           <ToasterProvider />
           <LoginModal />
           <RegisterModal />
-          <NavBar />
+          <NavBar currentUser={currentUser} />
         </ClientOnly>
         {children}
       </body>

@@ -11,6 +11,7 @@ import Heading from "../Heading";
 import Input from "../inputs/Input";
 import { toast } from "react-hot-toast";
 import Button from "../Button";
+import { signIn } from "next-auth/react";
 
 const RegisterModal = () => {
   const registerModal = useRegisterModal(); // 상태를 변수에 담아 사용
@@ -34,7 +35,7 @@ const RegisterModal = () => {
       .then(() => {
         registerModal.onClose();
       })
-      .catch((error) => {
+      .catch(() => {
         toast.error("Something went wrong");
       })
       .finally(() => {
@@ -44,7 +45,7 @@ const RegisterModal = () => {
 
   const bodyContent = (
     <div className="flex flex-col gap-4">
-      <Heading title="Welcome tot Airbnb" subTitle="Create an account!" />
+      <Heading title="Welcome to Airbnb" subTitle="Create an account!" />
       <Input
         id="email"
         label="Email"
@@ -80,13 +81,13 @@ const RegisterModal = () => {
         outline
         label="Continue with Google"
         icon={FcGoogle}
-        onClick={() => {}}
+        onClick={() => signIn("google")}
       />
       <Button
         outline
         label="Continue with Github"
         icon={AiFillGithub}
-        onClick={() => {}}
+        onClick={() => signIn("github")}
       />
       <div className="text-neutral-500 text-center mt-4 font-light">
         <div className="flex flex-row items-center gap-2">

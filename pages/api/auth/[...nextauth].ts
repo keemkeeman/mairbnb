@@ -4,7 +4,7 @@ import prisma from "@/app/libs/prismadb";
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
-import bcrypt from "bcrypt";
+import bcrypt from "bcrypt"; // 암호생성기
 
 export const authOptions: AuthOptions = {
   adapter: PrismaAdapter(prisma),
@@ -24,7 +24,7 @@ export const authOptions: AuthOptions = {
         password: { label: "password", type: "password" },
       },
       async authorize(credentials) {
-        if (!credentials || credentials?.email || credentials?.password) {
+        if (!credentials || !credentials?.email || !credentials?.password) {
           throw new Error("Invalid credentials");
         }
 

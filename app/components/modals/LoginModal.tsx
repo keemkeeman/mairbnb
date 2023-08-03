@@ -30,12 +30,13 @@ const LoginModal = () => {
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);
-    signIn("credentials", { ...data, redirect: false })
-    .then((reponse) => {
+
+    signIn("credentials", { ...data, redirect: false }).then((reponse) => {
       setIsLoading(false);
       if (reponse?.ok) {
         toast.success("Logged in");
         router.refresh();
+        loginModal.onClose();
       }
       if (reponse?.error) {
         toast.error(reponse.error);
@@ -73,13 +74,13 @@ const LoginModal = () => {
         outline
         label="Continue with Google"
         icon={FcGoogle}
-        onClick={() => {}}
+        onClick={() => signIn("google")}
       />
       <Button
         outline
         label="Continue with Github"
         icon={AiFillGithub}
-        onClick={() => {}}
+        onClick={() => signIn("github")}
       />
       <div className="text-neutral-500 text-center mt-4 font-light">
         <div className="flex flex-row items-center gap-2">
