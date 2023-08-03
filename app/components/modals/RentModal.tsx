@@ -6,8 +6,13 @@ import Heading from "../Heading";
 import Modal from "./Modal";
 import { categories } from "../navbar/Categories";
 import CategoryInput from "../inputs/CategoryInput";
+import CountrySelect from "../inputs/CountrySelect";
 import { FieldValues, useForm } from "react-hook-form";
+import dynamic from "next/dynamic";
 
+/* 상수들의 집합을 정의하는 것을 도와주는 기능입니다. 
+enum은 열거형(enumeration)이라고도 불리며, 
+상수에 이름을 부여하여 코드를 읽기 쉽고 유지보수하기 편하게 함 */
 enum STEPS {
   CATEGORY = 0,
   LOCATION = 1,
@@ -43,6 +48,16 @@ const RentModal = () => {
 
   /* 리액트 Form 훅의 watch 메소드는 해당 입력값을 가져옴 */
   const category = watch("category");
+  const location = watch("location");
+
+  /* 이상하게 임포트하기 */
+  const Map = useMemo(
+    () =>
+      dynamic(() => import("../Map"), {
+        ssr: false,
+      }),
+    [location]
+  );
 
   /* Form 상태를 업데이트할 때 사용,
   id는 변경하고자하는 요소의 이름
@@ -107,11 +122,26 @@ const RentModal = () => {
     </div>
   );
 
+  if (step === STEPS.LOCATION) {
+    bodyContent = (
+      <div className="flex flex-col gap-8">
+        <Heading
+          title="Where is your place located?"
+          subTitle="Help guests find you!"
+        />
+        <CountrySelect
+          value={location}
+          onChange={(clickedValue) => setCustomValue("location", clickedValue)}
+        />
+        <Map center={location?.latlng} />
+      </div>
+    );
+  }
   return (
     <Modal
       isOpen={rentModal.isOpen}
       onClose={rentModal.onClose}
-      onSubmit={rentModal.onClose}
+      onSubmit={onNext}
       actionLabel={actionLabel}
       secondaryActionLabel={secondaryActionLabel}
       secondaryAction={step === STEPS.CATEGORY ? undefined : onBack}
