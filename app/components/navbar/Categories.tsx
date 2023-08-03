@@ -2,7 +2,7 @@
 
 import Container from "../Container";
 import { FaSkiing } from "react-icons/fa";
-import { TbBeach, TbMountain, TbPool } from "react-icons/tb";
+import { TbBeach, TbPool } from "react-icons/tb";
 import { IoDiamond } from "react-icons/io5";
 import { BsSnow } from "react-icons/bs";
 import {
@@ -16,7 +16,7 @@ import {
   GiWindmill,
 } from "react-icons/gi";
 import { MdOutlineVilla } from "react-icons/md";
-import CategoryBox from "./CategoryBox";
+import CategoryBox from "../CategoryBox";
 import { usePathname, useSearchParams } from "next/navigation";
 
 export const categories = [
@@ -98,7 +98,7 @@ const Categories = () => {
     params?.get("category"); /* /?category=Beach >> category = Beach */
   const pathName = usePathname();
 
-  const isMainPage = pathName === "/";
+  const isMainPage = pathName === "/"; /* 항상 / 인데? */
 
   if (!isMainPage) {
     return null;
