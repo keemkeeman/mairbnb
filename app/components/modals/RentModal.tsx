@@ -101,6 +101,7 @@ const RentModal = () => {
     setStep((prev) => prev + 1);
   };
 
+  /* api 주소는 파일경로 */
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     if (step !== STEPS.PRICE) {
       return onNext();
