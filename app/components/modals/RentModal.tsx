@@ -1,12 +1,13 @@
 "use client";
 
 import useRentModal from "@/app/hooks/useRentModal";
-import { useState, useMemo } from "react";
+import { useState, useMemo, Suspense } from "react";
 import Heading from "../Heading";
 import Modal from "./Modal";
 import { categories } from "../navbar/Categories";
 import CategoryInput from "../inputs/CategoryInput";
 import CountrySelect from "../inputs/CountrySelect";
+import Counter from "../inputs/Counter";
 import { FieldValues, useForm } from "react-hook-form";
 import dynamic from "next/dynamic";
 
@@ -49,8 +50,14 @@ const RentModal = () => {
   /* 리액트 Form 훅의 watch 메소드는 해당 입력값을 가져옴 */
   const category = watch("category");
   const location = watch("location");
+  const guestCount = watch("guestCount");
+  const roomCount = watch("roomCount");
+  const bathRoomCount = watch("bathRoomCount");
 
-  /* 이상하게 임포트하기 */
+  /* SSR은 초기랜더링에 필요한 자원을 미리 불러오고 랜더링
+  dynamic 라이브러리는 특정 조건이나 사용자 액션에 따라 
+  필요한 모듈을 동적으로 로드시킴. 클라이언트 측에서만 실행
+  번들 크기 줄이고 렌더링 속도 개선 */
   const Map = useMemo(
     () =>
       dynamic(() => import("../Map"), {
@@ -122,6 +129,7 @@ const RentModal = () => {
     </div>
   );
 
+  /* LOCATION STEP */
   if (step === STEPS.LOCATION) {
     bodyContent = (
       <div className="flex flex-col gap-8">
@@ -133,10 +141,45 @@ const RentModal = () => {
           value={location}
           onChange={(clickedValue) => setCustomValue("location", clickedValue)}
         />
-        <Map center={location?.latlng} />
+        <Suspense fallback={<p>Loading...</p>}>
+          <Map center={location?.latlng} />
+        </Suspense>
       </div>
     );
   }
+
+  /* INFO STEP */
+  if (step === STEPS.INFO) {
+    bodyContent = (
+      <div className="flex flex-col gap-8">
+        <Heading
+          title="Share some basics about your place"
+          subTitle="What amenities do you have?"
+        />
+        <Counter
+          title="Guests"
+          subTitle="How many guests do you allow?"
+          value={guestCount}
+          onChange={(value) => setCustomValue("guestCount", value)}
+        />
+        <hr />
+        <Counter
+          title="Rooms"
+          subTitle="How many rooms do you have?"
+          value={roomCount}
+          onChange={(value) => setCustomValue("roomCount", value)}
+        />
+        <hr />
+        <Counter
+          title="Bathrooms"
+          subTitle="How many bathrooms do you have?"
+          value={bathRoomCount}
+          onChange={(value) => setCustomValue("bathRoomCount", value)}
+        />
+      </div>
+    );
+  }
+
   return (
     <Modal
       isOpen={rentModal.isOpen}
