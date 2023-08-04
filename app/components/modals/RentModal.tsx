@@ -1,5 +1,7 @@
 "use client";
 
+import axios from "axios";
+import { toast } from "react-hot-toast";
 import useRentModal from "@/app/hooks/useRentModal";
 import { useState, useMemo, Suspense } from "react";
 import Heading from "../Heading";
@@ -9,9 +11,10 @@ import CategoryInput from "../inputs/CategoryInput";
 import CountrySelect from "../inputs/CountrySelect";
 import Counter from "../inputs/Counter";
 import Input from "../inputs/Input";
-import { FieldValues, useForm } from "react-hook-form";
+import { FieldValues, useForm, SubmitHandler } from "react-hook-form";
 import dynamic from "next/dynamic";
 import ImageUpload from "../inputs/ImageUpload";
+import { useRouter } from "next/navigation";
 
 /* 상수들의 집합을 정의하는 것을 도와주는 기능입니다. 
 enum은 열거형(enumeration)이라고도 불리며, 
@@ -26,6 +29,7 @@ enum STEPS {
 }
 
 const RentModal = () => {
+  const router = useRouter();
   const rentModal = useRentModal();
   const [step, setStep] = useState(STEPS.CATEGORY);
   const [isLoading, setIsLoading] = useState(false);
@@ -43,7 +47,7 @@ const RentModal = () => {
       location: null,
       guestCount: 1,
       roomCount: 1,
-      bathRoomCount: 1,
+      bathroomCount: 1,
       imageSrc: "",
       price: 1,
       title: "",
@@ -56,7 +60,7 @@ const RentModal = () => {
   const location = watch("location");
   const guestCount = watch("guestCount");
   const roomCount = watch("roomCount");
-  const bathRoomCount = watch("bathRoomCount");
+  const bathroomCount = watch("bathroomCount");
   const imageSrc = watch("imageSrc");
 
   /* SSR은 초기랜더링에 필요한 자원을 미리 불러오고 랜더링
@@ -95,6 +99,28 @@ const RentModal = () => {
 
   const onNext = () => {
     setStep((prev) => prev + 1);
+  };
+
+  const onSubmit: SubmitHandler<FieldValues> = (data) => {
+    if (step !== STEPS.PRICE) {
+      return onNext();
+    }
+    setIsLoading(true);
+    axios
+      .post("/api/listings", data)
+      .then(() => {
+        toast.success("Listing created!");
+        router.refresh();
+        reset();
+        setStep(STEPS.CATEGORY);
+        rentModal.onClose();
+      })
+      .catch(() => {
+        toast.error("Something went wrong");
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   const actionLabel = useMemo(() => {
@@ -178,8 +204,8 @@ const RentModal = () => {
         <Counter
           title="Bathrooms"
           subTitle="How many bathrooms do you have?"
-          value={bathRoomCount}
-          onChange={(value) => setCustomValue("bathRoomCount", value)}
+          value={bathroomCount}
+          onChange={(value) => setCustomValue("bathroomCount", value)}
         />
       </div>
     );
@@ -256,7 +282,7 @@ const RentModal = () => {
     <Modal
       isOpen={rentModal.isOpen}
       onClose={rentModal.onClose}
-      onSubmit={onNext}
+      onSubmit={handleSubmit(onSubmit)}
       actionLabel={actionLabel}
       secondaryActionLabel={secondaryActionLabel}
       secondaryAction={step === STEPS.CATEGORY ? undefined : onBack}
