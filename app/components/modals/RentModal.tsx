@@ -10,6 +10,7 @@ import CountrySelect from "../inputs/CountrySelect";
 import Counter from "../inputs/Counter";
 import { FieldValues, useForm } from "react-hook-form";
 import dynamic from "next/dynamic";
+import ImageUpload from "../inputs/ImageUpload";
 
 /* 상수들의 집합을 정의하는 것을 도와주는 기능입니다. 
 enum은 열거형(enumeration)이라고도 불리며, 
@@ -40,7 +41,7 @@ const RentModal = () => {
       guestCount: 1,
       roomCount: 1,
       bathRoomCount: 1,
-      ImageSrc: "",
+      imageSrc: "",
       price: 1,
       title: "",
       description: "",
@@ -53,6 +54,7 @@ const RentModal = () => {
   const guestCount = watch("guestCount");
   const roomCount = watch("roomCount");
   const bathRoomCount = watch("bathRoomCount");
+  const imageSrc = watch("imageSrc");
 
   /* SSR은 초기랜더링에 필요한 자원을 미리 불러오고 랜더링
   dynamic 라이브러리는 특정 조건이나 사용자 액션에 따라 
@@ -175,6 +177,22 @@ const RentModal = () => {
           subTitle="How many bathrooms do you have?"
           value={bathRoomCount}
           onChange={(value) => setCustomValue("bathRoomCount", value)}
+        />
+      </div>
+    );
+  }
+
+  /* IMAGE STEP */
+  if (step === STEPS.IMAGES) {
+    bodyContent = (
+      <div className="flex flex-col gap-8">
+        <Heading
+          title="Add a photo of your place"
+          subTitle="Show guests what your place looks like!"
+        />
+        <ImageUpload
+          value={imageSrc}
+          onChange={(value) => setCustomValue("imageSrc", value)}
         />
       </div>
     );
