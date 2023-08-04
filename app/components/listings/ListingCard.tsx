@@ -58,8 +58,17 @@ const ListingCard: React.FC<ListingCardProps> = ({
     }
     const start = new Date(reservation.startDate);
     const end = new Date(reservation.endDate);
-    return `${format(start, "PP")} - ${format(end, "PP")}`; // 이게뭐지
+    return `${format(start, "PP")} - ${format(end, "PP")}`; 
   }, [reservation]);
+
+  /* reservation 객체의 값이 존재하는 경우, 
+  reservation.startDate와 reservation.endDate를 
+  JavaScript의 Date 객체로 변환하고, date-fns 
+  라이브러리의 format 함수를 사용하여 날짜를 원하는 
+  형식으로 포맷합니다. "PP"는 date-fns 라이브러리에서 
+  지원하는 날짜 형식 중 하나로, Aug 1, 2023과 같은 형식으로 
+  날짜를 포맷합니다. 따라서 reservationDate는 시작일과 
+  종료일이 포함된 문자열을 반환합니다. */
 
   return (
     <div
