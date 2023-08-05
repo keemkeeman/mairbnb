@@ -10,6 +10,7 @@ import ToasterProvider from "./providers/ToasterProvider";
 import getCurrentUser from "./actions/getCurrentUser";
 
 /* 레이아웃 가져오는데 3.5초 걸림 */
+/* 페이지, 레이아웃 11메가 21초 */
 
 /* 폰트 정의 */
 const font = Nunito({

@@ -9,14 +9,14 @@ import ListingHead from "@/app/components/listings/ListingHead";
 import ListingInfo from "@/app/components/listings/ListingInfo";
 
 interface ListingClientProps {
-  reservation?: Reservation[];
-  listing: SafeListing & {
-    user: SafeUser;
-  };
+  reservations?: Reservation[];
+  listing: SafeListing & { user: SafeUser };
+
   currentUser?: SafeUser | null;
 }
 
 const ListingClient: React.FC<ListingClientProps> = ({
+  reservations,
   listing,
   currentUser,
 }) => {
