@@ -1,4 +1,4 @@
-import { User } from "@prisma/client";
+import { Listing, User } from "@prisma/client";
 
 export type SafeUser = Omit<
   User,
@@ -7,6 +7,10 @@ export type SafeUser = Omit<
   createdAt: string; // 새로운 속성: ISO 8601 형식의 문자열로 변환
   updatedAt: string;
   emailVerified: string | null;
+};
+
+export type SafeListing = Omit<Listing, "createdAt"> & {
+  createdAt: string; // 새로운 속성: ISO 8601 형식의 문자열로 변환
 };
 
 /* Omit<User, "createdAt" | "updatedAt" | "emailVerified">:

@@ -7,7 +7,7 @@ import RegisterModal from "./components/modals/RegisterModal";
 import RentModal from "./components/modals/RentModal";
 import LoginModal from "./components/modals/LoginModal";
 import ToasterProvider from "./providers/ToasterProvider";
-import { getCurrentUser } from "./actions/getCurrentUser";
+import getCurrentUser from "./actions/getCurrentUser";
 
 /* 레이아웃 가져오는데 3.5초 걸림 */
 

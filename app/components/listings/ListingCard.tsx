@@ -1,8 +1,8 @@
 "use client";
 
 import useCountries from "@/app/hooks/useCountry";
-import { SafeUser } from "@/app/types";
-import { Listing, Reservation } from "@prisma/client";
+import { SafeUser, SafeListing } from "@/app/types";
+import { Reservation } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { useCallback, useMemo } from "react";
 import { format } from "date-fns";
@@ -11,7 +11,7 @@ import HeartButton from "../HeartButton";
 import Button from "../Button";
 
 interface ListingCardProps {
-  data: Listing;
+  data: SafeListing;
   reservation?: Reservation;
   onAction?: (id: string) => void;
   disabled?: boolean;
@@ -58,7 +58,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
     }
     const start = new Date(reservation.startDate);
     const end = new Date(reservation.endDate);
-    return `${format(start, "PP")} - ${format(end, "PP")}`; 
+    return `${format(start, "PP")} - ${format(end, "PP")}`;
   }, [reservation]);
 
   /* reservation 객체의 값이 존재하는 경우, 
@@ -72,7 +72,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
 
   return (
     <div
-      onClick={() => router.push(`/listing/${data.id}`)}
+      onClick={() => router.push(`/listings/${data.id}`)}
       className="col-span-1 cursor-pointer group"
     >
       <div className="felx flex-col gap-2 w-full">
