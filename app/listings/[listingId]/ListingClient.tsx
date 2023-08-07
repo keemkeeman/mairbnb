@@ -37,7 +37,6 @@ const ListingClient: React.FC<ListingClientProps> = ({
 
   const disabledDates = useMemo(() => {
     let dates: Date[] = [];
-
     reservations.forEach((reservation) => {
       const range = eachDayOfInterval({
         start: new Date(reservation.startDate),
@@ -71,7 +70,7 @@ const ListingClient: React.FC<ListingClientProps> = ({
         toast.success("Listing reserved!");
         setDateRange(initialDateRange);
         // Redirect to /trips
-        router.refresh();
+        router.push('/trips');
       })
       .catch(() => {
         toast.error("Something went wrong");
