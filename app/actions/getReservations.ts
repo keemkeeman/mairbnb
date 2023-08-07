@@ -1,4 +1,6 @@
-import prisma from "@/app/libs/prismadb";
+import { PrismaClient } from '@prisma/client'
+
+const prisma = new PrismaClient()
 
 interface IParams {
   listingId?: string;
