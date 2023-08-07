@@ -55,7 +55,8 @@ const RentModal = () => {
     },
   });
 
-  /* 리액트 Form 훅의 watch 메소드는 해당 입력값을 가져옴 */
+  /* 리액트 Form 훅의 watch 메소드는 해당 입력값을 가져옴
+  onChnage 와 state 활용해서 가져오지 않고 watch로 가져옴 */
   const category = watch("category");
   const location = watch("location");
   const guestCount = watch("guestCount");
