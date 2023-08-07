@@ -64,11 +64,11 @@ export default async function getListings(params: IListingParams) {
             OR: [
               {
                 endDate: { gte: startDate },
-                startDate: { lte: startDate },
+                startDate: { lte: startDate }, // startDate를 포함하는 날짜
               },
               {
                 startDate: { lte: endDate },
-                endDate: { gte: endDate },
+                endDate: { gte: endDate }, // endDate를 포함하는 날짜
               },
             ],
           },
