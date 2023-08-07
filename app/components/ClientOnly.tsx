@@ -4,6 +4,7 @@
 서버사이드 랜더링일 경우, hasMounted가 false로 유지 되어 랜더링을 막음 */
 
 import { useEffect, useState } from "react";
+import { Fragment } from "react";
 
 interface ClientOnlyProps {
   children: React.ReactNode;
@@ -20,7 +21,7 @@ const ClientOnly: React.FC<ClientOnlyProps> = ({ children }) => {
     return null;
   }
 
-  return <>{children}</>;
+  return <Fragment>{children}</Fragment>;
 };
 
 export default ClientOnly;
