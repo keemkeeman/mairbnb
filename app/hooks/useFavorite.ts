@@ -34,7 +34,6 @@ const useFavorite = ({ listingId, currentUser }: IUseFavorites) => {
         } else {
           request = () => axios.post(`/api/favorites/${listingId}`);
         }
-
         await request();
         router.refresh();
         toast.success("Success");

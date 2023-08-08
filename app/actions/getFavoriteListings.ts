@@ -1,7 +1,5 @@
-import { PrismaClient } from "@prisma/client";
+import prisma from "@/app/libs/prismadb";
 import getCurrentUser from "./getCurrentUser";
-
-const prisma = new PrismaClient();
 
 export default async function getFavoriteListings() {
   try {

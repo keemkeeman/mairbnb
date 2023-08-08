@@ -1,6 +1,7 @@
 "use client";
 
 import axios from "axios";
+import { toast } from "react-hot-toast";
 import { Range } from "react-date-range";
 import { SafeListing, SafeReservations, SafeUser } from "@/app/types";
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -11,7 +12,6 @@ import Container from "@/app/components/Container";
 import ListingHead from "@/app/components/listings/ListingHead";
 import ListingInfo from "@/app/components/listings/ListingInfo";
 import useLoginModal from "@/app/hooks/useLoginModal";
-import { toast } from "react-hot-toast";
 import ListingReservation from "@/app/components/listings/ListingReservation";
 
 const initialDateRange = {

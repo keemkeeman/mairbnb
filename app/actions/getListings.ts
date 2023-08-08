@@ -1,6 +1,4 @@
-import { PrismaClient } from '@prisma/client'
-
-const prisma = new PrismaClient()
+import prisma from "@/app/libs/prismadb";
 
 export interface IListingParams {
   userId?: string;
