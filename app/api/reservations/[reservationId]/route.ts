@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
-
 import getCurrentUser from "@/app/actions/getCurrentUser";
 import { PrismaClient } from '@prisma/client'
+
 const prisma = new PrismaClient()
 
 interface IParams {

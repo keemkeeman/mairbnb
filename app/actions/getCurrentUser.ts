@@ -1,12 +1,12 @@
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
-import { PrismaClient } from '@prisma/client'
-
-const prisma = new PrismaClient()
+import { PrismaClient } from "@prisma/client";
 
 export const getSession = async () => {
   return await getServerSession(authOptions);
 };
+
+const prisma = new PrismaClient();
 
 const getCurrentUser = async () => {
   try {

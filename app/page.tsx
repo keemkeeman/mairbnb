@@ -5,7 +5,8 @@ import Container from "./components/Container";
 import EmptyState from "./components/EmptyState";
 import ListingCard from "./components/listings/ListingCard";
 
-/* 이게 잘 이해가 안되네 getListing 과 연계 */
+export const dynamic = "force-dynamic";
+
 interface HomeProps {
   searchParams: IListingParams;
 }
