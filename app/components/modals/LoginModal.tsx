@@ -30,10 +30,10 @@ const LoginModal = () => {
     },
   });
 
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     setIsLoading(true);
 
-    signIn("credentials", { ...data, redirect: false }).then((reponse) => {
+    await signIn("credentials", { ...data, redirect: false }).then((reponse) => {
       setIsLoading(false);
       if (reponse?.ok) {
         toast.success("Logged in");
